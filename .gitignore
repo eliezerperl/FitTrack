@@ -1,0 +1,57 @@
+# === GLOBAL IGNORE ===
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+.vscode/
+*.swp
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# === BACKEND (.NET) ===
+*.dll
+*.exe
+*.pdb
+*.cache
+*.mdb
+*.db
+*.bak
+*.zip
+*.tar.gz
+*.nupkg
+*.snupkg
+
+# Build folders
+bin/
+obj/
+out/
+
+# Rider project files
+.idea/
+
+# Entity Framework
+Migrations/
+
+# === FRONTEND (Angular) ===
+node_modules/
+dist/
+.angular/
+npm-debug.log
+yarn-error.log
+.env
+.env.*.local
+
+# === ONE DRIVE SYNC FILES (since you're using OneDrive) ===
+*.lnk
+~$*
+*.tmp
+*.~*
+
+# === Ignore secrets or config files ===
+secrets.json
+*.local.json
+.env.local
+.env.development.local
