@@ -1,4 +1,5 @@
 using Fit_Track_API.Data;
+using Fit_Track_API.External;
 using Fit_Track_API.Middleware;
 using Fit_Track_API.Repositories;
 using Fit_Track_API.Repositories.InterFaces;
@@ -20,10 +21,24 @@ builder.Configuration
 	.AddUserSecrets<Program>()
 	.AddEnvironmentVariables();
 
+builder.Services.AddCors(options => {
+	options.AddPolicy("AngularApp",
+		builder => builder
+			.WithOrigins("http://localhost:4200")
+			.AllowAnyHeader()
+			.AllowAnyMethod()
+			.AllowCredentials()  // optional, only if you're using cookies/auth
+	);
+});
+
+builder.Services.AddHttpClient<FoodApiClient>();
+builder.Services.AddHttpClient<WorkoutApiClient>();
+
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
-
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+builder.Services.AddScoped<IFoodService, FoodService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options => {
@@ -56,7 +71,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseCors("AngularApp");
+
+//app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
