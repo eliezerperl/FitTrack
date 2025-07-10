@@ -1,0 +1,81 @@
+:host,
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Host styles */
+:host {
+  background-image: url("https://www.shutterstock.com/image-illustration/modern-gym-interior-sport-fitness-600nw-2520634397.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Layout container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--navbar-bg);
+  color: var(--surface-color);
+  padding: 1rem;
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  color: var(--surface-color);
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: var(--primary-color);
+}
+
+/* Main content fills space between header/footer */
+.main-content {
+  flex: 1;
+  overflow: auto;
+  padding: 2rem 1rem;
+  min-height: 0;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--footer-bg);
+  color: var(--muted-text);
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,30 @@
+<section class="food-search-section">
+  <h2>Search for Food</h2>
+
+  <!-- Search Input -->
+  <form (submit)="onSubmit($event)">
+    <input
+      type="text"
+      [(ngModel)]="query"
+      name="query"
+      placeholder="e.g. cheddar cheese"
+      class="food-search-input"
+    />
+    <button type="submit" class="search-button">Search</button>
+  </form>
+
+  <!-- Loading State -->
+  <p *ngIf="loading" class="loading-text">Loading...</p>
+
+  <!-- No Results -->
+  <p *ngIf="!loading && results.length === 0 && hasSearched" class="no-results">
+    No results found.
+  </p>
+
+  <!-- Results -->
+  <ul class="food-results" *ngIf="results.length > 0">
+    <li *ngFor="let item of results" class="food-item">
+      {{ item }}
+    </li>
+  </ul>
+</section>

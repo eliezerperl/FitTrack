@@ -1,0 +1,32 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+:root {
+  --primary-color: #4ade80;
+  --primary-dark: #22c55e;
+  --primary-light: #bbf7d0;
+
+  --secondary-color: #38bdf8;
+  --secondary-dark: #0ea5e9;
+
+  --text-color: #333;
+  --background-color: #f9f9f9;
+  --surface-color: #fff;
+  --border-color: #e5e7eb;
+  --muted-text: #999999;
+
+  --success-color: #22c55e;
+  --warning-color: #facc15;
+  --error-color: #ef4444;
+
+  --navbar-bg: #2d2d2d;
+  --footer-bg: #1e1e1e;
+}

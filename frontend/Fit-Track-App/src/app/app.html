@@ -1,0 +1,21 @@
+<section class="app-container">
+  <nav class="navbar">
+    <h1 class="logo">FitTrack</h1>
+    <ul class="nav-links">
+      <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+      <li><a routerLink="/food" routerLinkActive="active">Food</a></li>
+      <li><a routerLink="/fitness" routerLinkActive="active">Fitness</a></li>
+      <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      &copy; {{ currentYear }} FitTrack. All rights reserved.
+    </div>
+  </footer>
+</section>

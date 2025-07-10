@@ -1,0 +1,26 @@
+<div class="modal-overlay" (click)="close.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="close.emit()">✕</button>
+    <h2>{{ exercise.name }}</h2>
+    <p><strong>Difficulty:</strong> {{ exercise.difficulty }}</p>
+    <p><strong>Category:</strong> {{ exercise.category }}</p>
+    <p><strong>Target:</strong> {{ exercise.target }}</p>
+    <p><strong>Body Part:</strong> {{ exercise.bodyPart }}</p>
+    <p><strong>Equipment:</strong> {{ exercise.equipment }}</p>
+    <p><strong>Description:</strong> {{ exercise.description }}</p>
+
+    <div *ngIf="exercise.secondaryMuscles?.length">
+      <h4>Secondary Muscles:</h4>
+      <ul>
+        <li *ngFor="let muscle of exercise.secondaryMuscles">{{ muscle }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="exercise.instructions?.length">
+      <h4>Instructions:</h4>
+      <ol>
+        <li *ngFor="let step of exercise.instructions">{{ step }}</li>
+      </ol>
+    </div>
+  </div>
+</div>
