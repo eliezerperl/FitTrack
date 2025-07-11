@@ -15,70 +15,15 @@
   <!-- Tab Content -->
   <div class="tab-content">
     <!-- Search Tab -->
-    <ng-container *ngIf="currentTab === 'search'">
+    <ng-container *ngIf="currentTab === 'search'" class="search-tab">
       <!-- Filter Type Selection -->
-      <div class="filter-options">
-        <label>
-          <input
-            type="radio"
-            [(ngModel)]="selectedFilterType"
-            value="bodyPart"
-          />
-          Body Part
-        </label>
-        <label>
-          <input type="radio" [(ngModel)]="selectedFilterType" value="muscle" />
-          Muscle
-        </label>
-        <label>
-          <input
-            type="radio"
-            [(ngModel)]="selectedFilterType"
-            value="equipment"
-          />
-          Equipment
-        </label>
-      </div>
-
-      <!-- Filter Dropdown -->
-      <div class="filter-selector">
-        <select [(ngModel)]="selectedFilterValue">
-          <option value="" disabled selected>Select an option</option>
-          <option
-            *ngFor="let item of selectedFilterType === 'bodyPart' ? bodyParts : selectedFilterType === 'muscle' ? muscles : equipmentList"
-            [value]="item"
-          >
-            {{ item }}
-          </option>
-        </select>
-        <button (click)="fetchExercises()" [disabled]="!selectedFilterValue">
-          Search
-        </button>
-      </div>
-
-      <!-- Results -->
-      <div *ngIf="loading">Loading workouts...</div>
-      <div *ngIf="!loading && exercises.length === 0">
-        <p>No exercises found. Please try a different filter.</p>
-      </div>
-      <div class="exercise-grid" *ngIf="!loading && exercises.length">
-        <app-exercise-card
-          *ngFor="let ex of exercises"
-          [exercise]="ex"
-          (viewDetails)="onExerciseClick(ex)"
-        />
-        <app-exercise-modal
-          *ngIf="showModal"
-          [exercise]="selectedExercise!"
-          (close)="closeModal()"
-        />
-      </div>
+      <app-search-workouts />
     </ng-container>
 
     <!-- Log Tab -->
     <div *ngIf="currentTab === 'log'" class="log-tab">
       <h2>Log Workout</h2>
-      <p>This feature is coming soon.</p>
+      <app-log-workout />
     </div>
   </div>
 </section>

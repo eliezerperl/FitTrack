@@ -35,6 +35,8 @@ builder.Services.AddHttpClient<FoodApiClient>();
 builder.Services.AddHttpClient<WorkoutApiClient>();
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+//builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
@@ -57,6 +59,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	});
 
 builder.Services.AddControllers();
+		//.AddJsonOptions(options =>
+		//{
+		//	options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+		//	options.JsonSerializerOptions.PropertyNamingPolicy = null;
+		//});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

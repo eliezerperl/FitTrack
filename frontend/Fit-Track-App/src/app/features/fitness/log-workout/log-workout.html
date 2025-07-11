@@ -1,0 +1,81 @@
+<section class="log-workout-wrapper">
+  <form [formGroup]="workoutForm" (ngSubmit)="submit()" class="log-form">
+
+    <!-- Workout Type
+    <div>
+      <label>Workout Type:</label>
+      <select formControlName="workoutType" (change)="onWorkoutTypeChange()">
+        <option value="strength">Strength</option>
+        <option value="cardio">Cardio</option>
+      </select>
+    </div> -->
+
+    <!-- Date -->
+    <div>
+      <label>Date:</label>
+      <input type="date" formControlName="date" />
+    </div>
+
+    <!-- Exercise Search Criteria -->
+    <div>
+      <label>Search Exercises By:</label>
+      <div>
+        <label><input type="radio" value="Body Part" formControlName="searchType" /> Body Part</label>
+        <label><input type="radio" value="Target Muscle" formControlName="searchType" /> Target Muscle</label>
+        <label><input type="radio" value="Equipment" formControlName="searchType" /> Equipment</label>
+      </div>
+    </div>
+
+    <!-- Search Value Selection -->
+    <div>
+      <label>Select {{ workoutForm.get('searchType')?.value }}:</label>
+      <select formControlName="searchValue">
+        <option *ngFor="let option of searchOptions" [value]="option">{{ option }}</option>
+      </select>
+      <button type="button" (click)="fetchExercisesByFilter()">Search</button>
+    </div>
+
+    <!-- Exercise Result List -->
+    <div *ngIf="loading">Loading...</div>
+    <ul *ngIf="exercises.length && !loading">
+      <li *ngFor="let ex of exercises" (click)="selectExercise(ex)">
+        {{ ex.name }}
+      </li>
+    </ul>
+
+    <!-- Selected Exercise Name -->
+    <div>
+      <label>Exercise Name:</label>
+      <input type="text" formControlName="exerciseName" readonly />
+    </div>
+
+    <!-- Strength Fields -->
+      <div>
+        <label>Sets:</label>
+        <input type="number" formControlName="sets" />
+      </div>
+      <div>
+        <label>Reps:</label>
+        <input type="number" formControlName="reps" />
+      </div>
+      <div>
+        <label>Weight (kg):</label>
+        <input type="number" formControlName="weight" />
+      </div>
+
+      <div>
+        <label>Duration (mm:ss):</label>
+        <input type="text" formControlName="duration" />
+      </div>
+
+
+    <!-- Notes -->
+    <div>
+      <label>Notes:</label>
+      <textarea formControlName="notes"></textarea>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" [disabled]="workoutForm.invalid">Log Workout</button>
+  </form>
+</section>

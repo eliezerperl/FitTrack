@@ -1,4 +1,6 @@
 ﻿using Fit_Track_API.Models.API_DTOs.Workout;
+using Fit_Track_API.Models.DTOs;
+using Fit_Track_API.Models.Entities;
 using Fit_Track_API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +15,67 @@ namespace Fit_Track_API.Controllers {
 		public WorkoutController(IWorkoutService workoutService) {
 			_workoutService = workoutService ?? throw new ArgumentNullException(nameof(workoutService));
 		}
+		//WORKOUT ENTRY CRUD OPERATIONS
+		[HttpPost]
+		public async Task<IActionResult> CreateWorkoutEntry([FromBody] WorkoutEntry workoutEntry) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
+			}
+			var userId = Guid.NewGuid(); // This should be replaced with the actual user ID from the authenticated user context
+			var createdEntry = await _workoutService.CreateAsync(workoutEntry, userId);
+			return CreatedAtAction(nameof(GetAllWorkouts), new { id = createdEntry.Id }, createdEntry);
+		}
 
+		[HttpGet]
+		public async Task <IActionResult> GetAllWorkouts() {
+			var allWorkouts = await _workoutService.GetAllAsync();
+
+			return Ok(allWorkouts);
+		}
+
+		//By Workout id
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetWorkoutById(Guid id) {
+			var workout = await _workoutService.GetByIdAsync(id);
+			if (workout == null) {
+				return NotFound($"Workout with ID {id} not found.");
+			}
+			return Ok(workout);
+		}
+
+		//[HttpGet]
+		//[Route("user/{userId}")]
+		//public async Task<IActionResult> GetWorkoutsByUserId(Guid userId) {
+		//	var userWorkouts = await _workoutService.GetByUserIdAsync(userId);
+		//	if (userWorkouts == null || !userWorkouts.Any()) {
+		//		return NotFound($"No workouts found for user with ID {userId}.");
+		//	}
+		//	return Ok(userWorkouts);
+		//}
+
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateWorkout(Guid id, [FromBody] WorkoutEntry workoutEntry) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
+			}
+			var updatedWorkout = await _workoutService.UpdateAsync(id, workoutEntry);
+			if (updatedWorkout == null) {
+				return NotFound($"Workout with ID {id} not found.");
+			}
+			return Ok(updatedWorkout);
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteWorkout(Guid id) {
+			await _workoutService.DeleteAsync(id);
+			return NoContent();
+		}
+
+
+
+
+
+		//THIRD PARTY API CALLS
 		[HttpGet("image/{exerciseId}")]
 		public async Task<IActionResult> GetExerciseImage(string exerciseId) {
 			var (imageData, contentType) = await _workoutService.GetExerciseImageAsync(exerciseId);

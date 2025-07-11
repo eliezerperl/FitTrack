@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Exercise } from '../models/exercise-model';
+import { LoggedWorkout } from '../models/log-workout-model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,26 @@ export class WorkoutService {
   private workoutApiUrl: string = `${environment.apiUrl}/workout`;
 
   constructor(private http: HttpClient) {}
+
+  // CRUD Operations
+  createWorkout(loggedWorkout: LoggedWorkout): Observable<Exercise> {
+    return this.http.post<Exercise>(`${this.workoutApiUrl}`, loggedWorkout);
+  }
+  getAllWorkouts(): Observable<Exercise[]> {
+    return this.http.get<Exercise[]>(`${this.workoutApiUrl}`);
+  }
+  getWorkoutById(id: string): Observable<Exercise> {
+    return this.http.get<Exercise>(`${this.workoutApiUrl}/${id}`);
+  }
+  getWorkoutByUserId(userId: string): Observable<Exercise> {
+    return this.http.get<Exercise>(`${this.workoutApiUrl}/${userId}`);
+  }
+  updateWorkout(exercise: Exercise): Observable<Exercise> {
+    return this.http.post<Exercise>(`${this.workoutApiUrl}`, exercise);
+  }
+  deleteWorkout(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.workoutApiUrl}/${id}`);
+  }
 
   // Target Muscle List
   getTargetMuscleList(): Observable<string[]> {
