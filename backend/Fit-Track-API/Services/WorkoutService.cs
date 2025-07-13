@@ -19,18 +19,17 @@ namespace Fit_Track_API.Services {
 		}
 
 		// Create
-		public async Task<WorkoutEntry> CreateAsync(WorkoutEntry workoutEntryDto, Guid userId) {
+		public async Task<WorkoutEntry> CreateAsync(WorkoutEntry workoutEntryDto, Guid userId, User user) {
 			WorkoutEntry workoutEntry = new WorkoutEntry {
-				UserId = userId.ToString(),
+				UserId = userId,
+				User = user, // Set the User navigational property
 				ExerciseId = workoutEntryDto.ExerciseId,
 				ExerciseName = workoutEntryDto.ExerciseName,
 				Date = workoutEntryDto.Date,
-				//WorkoutType = workoutEntryDto.WorkoutType,
 				Sets = workoutEntryDto.Sets,
 				Reps = workoutEntryDto.Reps,
 				Weight = workoutEntryDto.Weight,
 				Duration = workoutEntryDto.Duration,
-				//DistanceKm = workoutEntryDto.DistanceKm,
 				Notes = workoutEntryDto.Notes
 			};
 
@@ -46,22 +45,32 @@ namespace Fit_Track_API.Services {
 
 		// Get By Workout Id
 		public async Task<WorkoutEntry> GetByIdAsync(Guid id) {
-			return await _workoutRepo.GetByIdAsync(id);
+			WorkoutEntry workoutEntry = await _workoutRepo.GetByIdAsync(id);
+			if (workoutEntry == null) {
+				throw new NullReferenceException($"Workout entry with ID {id} does not exist.");
+			}
+			return workoutEntry;
 		}
 
-		// Get By User Id (soon)
+		// Get By User Id
+		//public async Task<IEnumerable<WorkoutEntry>> GetByUserIdAsync(Guid userId) {
+		//	List<WorkoutEntry> userWorkouts = await _workoutRepo.GetByUserIdAsync(userId);
+		//	if (userWorkouts == null) {
+		//		throw new NullReferenceException($"No workouts found for user with ID {userId}.");
+		//	}
+		//	if (userWorkouts.Count == 0) {
+		//		throw new ArgumentException($"No workouts found for user with ID {userId}.");
+		//	}
+		//	return userWorkouts;
+		//}
+
 		// Update
 		public async Task<WorkoutEntry> UpdateAsync(Guid id, WorkoutEntry workoutEntryDto) {
 			WorkoutEntry workoutEntry = await _workoutRepo.GetByIdAsync(id);
-				workoutEntry.ExerciseId = workoutEntryDto.ExerciseId;
-				workoutEntry.ExerciseName = workoutEntryDto.ExerciseName;
-				workoutEntry.Date = workoutEntryDto.Date;
-				//workoutEntry.WorkoutType = workoutEntryDto.WorkoutType;
 				workoutEntry.Sets = workoutEntryDto.Sets;
 				workoutEntry.Reps = workoutEntryDto.Reps;
 				workoutEntry.Weight = workoutEntryDto.Weight;
 				workoutEntry.Duration = workoutEntryDto.Duration;
-				//workoutEntry.DistanceKm = workoutEntryDto.DistanceKm;
 				workoutEntry.Notes = workoutEntryDto.Notes;
 			await _workoutRepo.UpdateAsync(id, workoutEntry);
 			return workoutEntry;
@@ -77,7 +86,13 @@ namespace Fit_Track_API.Services {
 
 		// Third party API consumption
 		public async Task<(byte[] ImageData, string ContentType)> GetExerciseImageAsync(string exerciseId) {
-			return await _workoutApiClient.GetExerciseImageAsync(exerciseId);
+			var image = await _workoutApiClient.GetExerciseImageAsync(exerciseId);
+
+			if (image.ImageData == null || image.ContentType == null) {
+				throw new NullReferenceException("The image data or content type is null.");
+			}
+
+			return (image.ImageData, image.ContentType);
 		}
 
 
@@ -126,12 +141,26 @@ namespace Fit_Track_API.Services {
 		private List<string> serializeStringAndReturnStringList(string listAsString) {
 			List<string> list = JsonConvert.DeserializeObject<List<string>>(listAsString);
 
+			if (list == null) {
+				throw new NullReferenceException("The list is null.");
+			}
+			if (list.Count == 0) {
+				throw new ArgumentException("The list is empty.");
+			}
+
 			return list;
 		}
 
 		//Helper Methods to capatalize and return ExerciseDto list (avoid redundancy)
 		private List<ExerciseDto> CapitalizeFromStringAndReturnExerciseList(string exercisesAsString) {
 			List<ExerciseDto> exercises = JsonConvert.DeserializeObject<List<ExerciseDto>>(exercisesAsString);
+
+			if (exercises == null) {
+				throw new NullReferenceException("The exercises list is null.");
+			}
+			if (exercises.Count == 0) {
+				throw new ArgumentException("The exercises list is empty.");
+			}
 
 			foreach (var ex in exercises) {
 				ex.Name = CapitalizeEachWord(ex.Name);
@@ -146,5 +175,7 @@ namespace Fit_Track_API.Services {
 				.Split(' ', StringSplitOptions.RemoveEmptyEntries)
 				.Select(word => char.ToUpper(word[0]) + word.Substring(1).ToLower()));
 		}
+
+
 	}
 }

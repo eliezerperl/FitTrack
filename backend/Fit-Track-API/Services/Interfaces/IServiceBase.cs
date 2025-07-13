@@ -5,7 +5,7 @@ namespace Fit_Track_API.Services.Interfaces {
 	public interface IServiceBase<T> where T: class {
 		//CRUD Operations
 		// Create
-		Task<T> CreateAsync(T Dto, Guid userId);
+		Task<T> CreateAsync(T Dto, Guid userId, User user);
 
 
 		// Get All
@@ -14,7 +14,9 @@ namespace Fit_Track_API.Services.Interfaces {
 		// Get By Workout Id
 		Task<T> GetByIdAsync(Guid id);
 
-		// Get By User Id (soon)
+		// Get By User Id
+		Task<IEnumerable<T>> GetByUserIdAsync(Guid userId);
+
 		// Update
 		Task<T> UpdateAsync(Guid id, T Dto);
 

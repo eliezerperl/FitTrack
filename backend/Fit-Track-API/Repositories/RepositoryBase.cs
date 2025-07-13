@@ -42,6 +42,13 @@ namespace Fit_Track_API.Repositories {
 			return wantedEntity;
 		}
 
+		public async Task<IEnumerable<T>> GetByUserIdAsync(Guid userId) {
+			var entities = await _dbSet.Where(e => e.UserId == userId).ToListAsync();
+			if (entities == null || !entities.Any())
+				throw new ArgumentException($"No entities found for user with ID {userId}.");
+			return entities;
+		}
+
 		public async Task UpdateAsync(Guid id, T entity) {
 			var existingEntity = await _dbSet.FindAsync(id);
 			if (existingEntity == null)
@@ -51,5 +58,6 @@ namespace Fit_Track_API.Repositories {
 
 			await _dbContext.SaveChangesAsync();
 		}
+
 	}
 }

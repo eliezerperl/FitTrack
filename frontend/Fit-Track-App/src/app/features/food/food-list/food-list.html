@@ -23,8 +23,14 @@
 
   <!-- Results -->
   <ul class="food-results" *ngIf="results.length > 0">
-    <li *ngFor="let item of results" class="food-item">
-      {{ item }}
+    <li *ngFor="let item of results" (click)="openFoodModal(item)" class="food-item clickable">
+      {{ item.description }}
     </li>
   </ul>
+
+  <app-food-modal
+  *ngIf="selectedFood"
+  [food]="selectedFood"
+  (close)="selectedFood = null"
+/>
 </section>

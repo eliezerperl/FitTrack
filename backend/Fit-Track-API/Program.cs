@@ -27,7 +27,7 @@ builder.Services.AddCors(options => {
 			.WithOrigins("http://localhost:4200")
 			.AllowAnyHeader()
 			.AllowAnyMethod()
-			.AllowCredentials()  // optional, only if you're using cookies/auth
+			.AllowCredentials()
 	);
 });
 
@@ -36,7 +36,7 @@ builder.Services.AddHttpClient<WorkoutApiClient>();
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
-//builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();

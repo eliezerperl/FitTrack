@@ -1,0 +1,19 @@
+<div class="modal" *ngIf="food">
+  <h2>{{ food.description }}</h2>
+  <ul>
+    <li
+      *ngFor="let nutrient of food.foodNutrients"
+      (click)="openNutrientModal(nutrient)"
+      class="clickable"
+    >
+      {{ nutrient.nutrientName }}
+    </li>
+  </ul>
+  <button (click)="close.emit()">Close</button>
+
+  <app-nutrient-modal
+    *ngIf="selectedNutrient"
+    [nutrient]="selectedNutrient"
+    (close)="selectedNutrient = null"
+  />
+</div>

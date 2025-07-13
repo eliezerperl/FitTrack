@@ -22,7 +22,8 @@ namespace Fit_Track_API.Controllers {
 				return BadRequest(ModelState);
 			}
 			var userId = Guid.NewGuid(); // This should be replaced with the actual user ID from the authenticated user context
-			var createdEntry = await _workoutService.CreateAsync(workoutEntry, userId);
+			var user = new User { Id = userId }; // This should be replaced with the actual user object from the authenticated user context
+			var createdEntry = await _workoutService.CreateAsync(workoutEntry, userId, user);
 			return CreatedAtAction(nameof(GetAllWorkouts), new { id = createdEntry.Id }, createdEntry);
 		}
 

@@ -1,11 +1,11 @@
-﻿using Fit_Track_API.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Fit_Track_API.Models.Entities {
 	public class WorkoutEntry : IEntity {
 		public Guid Id { get; set; } = Guid.NewGuid();
-		public string UserId { get; set; } // I set this in contoller from request data
 
+		public Guid UserId { get; set; } // I set this in contoller from request data
+		public User User { get; set; } // Navigational Property
 
 		[Required(ErrorMessage = "ExerciseId is required")]
 		public string ExerciseId { get; set; }

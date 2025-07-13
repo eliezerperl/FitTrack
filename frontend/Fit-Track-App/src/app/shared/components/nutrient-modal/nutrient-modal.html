@@ -1,0 +1,7 @@
+<div class="modal" *ngIf="nutrient">
+  <h3>{{ nutrient.nutrientName }}</h3>
+  <p><strong>Amount:</strong> {{ nutrient.value }} {{ nutrient.unitName }}</p>
+  <p><strong>Nutrient ID:</strong> {{ nutrient.nutrientId }}</p>
+  <p><strong>Number:</strong> {{ nutrient.nutrientNumber }}</p>
+  <button (click)="close.emit()">Close</button>
+</div>

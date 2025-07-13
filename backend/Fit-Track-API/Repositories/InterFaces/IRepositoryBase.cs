@@ -7,6 +7,8 @@ namespace Fit_Track_API.Repositories.InterFaces {
 
 		Task<T> GetByIdAsync(Guid id);
 
+		Task<IEnumerable<T>> GetByUserIdAsync(Guid userId);
+
 		Task CreateAsync(T entity);
 
 		Task UpdateAsync(Guid id, T entity);

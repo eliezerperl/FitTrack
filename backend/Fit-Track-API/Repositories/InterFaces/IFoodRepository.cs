@@ -1,4 +1,6 @@
-﻿namespace Fit_Track_API.Repositories.InterFaces {
-	public interface IFoodRepository {
+﻿using Fit_Track_API.Models.Entities;
+
+namespace Fit_Track_API.Repositories.InterFaces {
+	public interface IFoodRepository: IRepositoryBase<FoodEntry> {
 	}
 }
