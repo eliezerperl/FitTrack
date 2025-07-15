@@ -35,7 +35,8 @@ export class FoodList {
         this.results = res;
         this.loading = false;
       },
-      error: () => {
+      error: (err) => {
+        console.log(err)
         this.results = [];
         this.loading = false;
       },

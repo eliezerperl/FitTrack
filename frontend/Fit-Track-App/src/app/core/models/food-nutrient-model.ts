@@ -8,3 +8,9 @@ export interface FoodNutrient {
   unitName: string;
   value: number;
 }
+
+export interface NutrientEntry {
+  name: string;
+  unit: string;
+  value: number;
+}

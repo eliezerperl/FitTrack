@@ -5,13 +5,15 @@ namespace Fit_Track_API.Models.Entities {
 		public Guid Id { get; set; } = Guid.NewGuid();
 
 		public Guid UserId { get; set; } // Set in controller via request
-		public User User { get; set; } // Navigational Property
+		public User? User { get; set; } // Navigational Property
 
 
 		[Required]
 		public string FoodName { get; set; }
 
 		public DateTime DateLogged { get; set; } = DateTime.UtcNow;
+
+		public double Quantity { get; set; }
 
 		public List<Nutrient> Nutrients { get; set; } = new();
 

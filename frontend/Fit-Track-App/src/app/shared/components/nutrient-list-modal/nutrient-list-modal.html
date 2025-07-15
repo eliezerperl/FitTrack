@@ -1,0 +1,19 @@
+<div class="modal">
+  <h2>Nutrients</h2>
+  <ul class="modal-list">
+    <li
+      *ngFor="let nutrient of nutrients"
+      (click)="openNutrient(nutrient)"
+      class="clickable"
+    >
+      {{ nutrient.nutrientName }}
+    </li>
+  </ul>
+  <button (click)="close.emit()">Close</button>
+
+  <app-nutrient-modal
+    *ngIf="selectedNutrient"
+    [nutrient]="selectedNutrient"
+    (close)="closeNutrientModal()"
+  />
+</div>

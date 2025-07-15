@@ -1,0 +1,56 @@
+<section class="log-food-wrapper">
+  <form [formGroup]="foodForm" (ngSubmit)="submit()" class="log-form">
+    <!-- Search Field -->
+    <div>
+      <label>Search Food:</label>
+      <input
+        type="text"
+        formControlName="searchQuery"
+        (keydown.enter)="onSearch()"
+        placeholder="Search food..."
+      />
+      <button type="button" (click)="onSearch()">Search</button>
+    </div>
+
+    <!-- Search Results -->
+    <ul *ngIf="foodResults.length && !loading">
+      <li *ngFor="let food of foodResults" (click)="selectFood(food)">
+        {{ food.description }}
+      </li>
+    </ul>
+    <div *ngIf="loading">Loading...</div>
+
+    <!-- Food Name -->
+    <div>
+      <label>Food Name:</label>
+      <input type="text" formControlName="foodName" readonly />
+    </div>
+
+    <!-- Quantity -->
+    <div>
+      <label>Quantity (grams):</label>
+      <input type="number" formControlName="quantity" />
+    </div>
+
+    <!-- Nutrients -->
+    <div>
+      <label>Nutrients:</label>
+      <button type="button" (click)="showNutrients = true">View Nutrients</button>
+    </div>
+
+    <app-nutrient-list-modal
+      *ngIf="showNutrients"
+      [nutrients]="nutrients"
+      (close)="showNutrients = false"
+    />
+
+    <!-- Notes -->
+    <div>
+      <label>Notes:</label>
+      <textarea formControlName="notes"></textarea>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" [disabled]="foodForm.invalid">Log Food</button>
+  </form>
+</section>

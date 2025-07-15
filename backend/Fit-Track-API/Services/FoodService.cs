@@ -23,6 +23,7 @@ namespace Fit_Track_API.Services {
 				UserId = userId,
 				User = user, // Set the User navigational property
 				FoodName = foodEntryDto.FoodName,
+				Quantity = foodEntryDto.Quantity,
 				Nutrients = foodEntryDto.Nutrients,
 				Notes = foodEntryDto.Notes
 			};
@@ -53,6 +54,7 @@ namespace Fit_Track_API.Services {
 		// Update a food entry
 		public async Task<FoodEntry> UpdateAsync(Guid id, FoodEntry foodEntryDto) {
 			FoodEntry foodEntry = await _foodRepo.GetByIdAsync(id);
+			foodEntry.Quantity = foodEntryDto.Quantity;
 			foodEntry.Notes = foodEntryDto.Notes;
 
 			await _foodRepo.UpdateAsync(id, foodEntry);

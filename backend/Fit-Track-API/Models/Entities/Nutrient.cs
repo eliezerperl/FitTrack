@@ -8,12 +8,10 @@ namespace Fit_Track_API.Models.Entities {
 		public string Name { get; set; }
 
 		[Required]
-		public string Unit { get; set; }  // e.g., "g", "mg", "kcal"
+		public string Unit { get; set; }
 
 		[Required]
 		public double Value { get; set; }
 
-		public Guid FoodEntryId { get; set; }
-		public FoodEntry FoodEntry { get; set; }
 	}
 }

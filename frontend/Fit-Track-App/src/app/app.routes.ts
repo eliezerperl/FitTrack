@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { FoodList } from './features/food/food-list/food-list';
 import { Fitness } from './features/fitness/fitness';
+import { Food } from './features/food/food';
 
 export const routes: Routes = [
-  { path: 'food', component: FoodList },
+  { path: 'food', component: Food },
   { path: 'fitness', component: Fitness },
 ];

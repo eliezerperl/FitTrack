@@ -1,6 +1,6 @@
 .modal {
   position: fixed;
-  top: 25%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
   background: white;
@@ -8,23 +8,26 @@
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  max-height: 50vh;
   width: 90%;
   max-width: 500px;
-  display: flex;
-  flex-direction: column;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .modal-list {
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+  max-height: 250px;
   overflow-y: auto;
-  flex: 1;
-  margin-top: 1rem;
 }
 
 .clickable {
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
 }
+
 .clickable:hover {
   background-color: #f0f0f0;
 }

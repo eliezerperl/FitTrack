@@ -22,11 +22,11 @@ namespace Fit_Track_API.Controllers {
 			var userId = Guid.NewGuid(); // This should be replaced with the actual user ID from the authenticated user context
 			var user = new User { Id = userId }; // This should be replaced with the actual user object from the authenticated user context
 			var createdEntry = await _foodService.CreateAsync(foodEntry, userId, user);
-			return CreatedAtAction(nameof(GetAllWorkouts), new { id = createdEntry.Id }, createdEntry);
+			return CreatedAtAction(nameof(GetAllFoodEntries), new { id = createdEntry.Id }, createdEntry);
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetAllWorkouts() {
+		public async Task<IActionResult> GetAllFoodEntries() {
 			var allWorkouts = await _foodService.GetAllAsync();
 
 			return Ok(allWorkouts);
@@ -34,7 +34,7 @@ namespace Fit_Track_API.Controllers {
 
 		//By foodentry id
 		[HttpGet("find/{id}")]
-		public async Task<IActionResult> GetWorkoutById(Guid id) {
+		public async Task<IActionResult> GetFoodEntryById(Guid id) {
 			var foodEntry = await _foodService.GetByIdAsync(id);
 			if (foodEntry == null) {
 				return NotFound($"Food Entry with ID {id} not found.");
@@ -53,7 +53,7 @@ namespace Fit_Track_API.Controllers {
 		//}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateWorkout(Guid id, [FromBody] FoodEntry foodEntry) {
+		public async Task<IActionResult> UpdateFoodEntry(Guid id, [FromBody] FoodEntry foodEntry) {
 			if (!ModelState.IsValid) {
 				return BadRequest(ModelState);
 			}
@@ -65,7 +65,7 @@ namespace Fit_Track_API.Controllers {
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteWorkout(Guid id) {
+		public async Task<IActionResult> DeleteFoodEntry(Guid id) {
 			await _foodService.DeleteAsync(id);
 			return NoContent();
 		}

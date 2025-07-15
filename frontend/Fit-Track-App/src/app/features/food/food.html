@@ -1,0 +1,22 @@
+<section class="food-page">
+  <!-- Tabs -->
+  <div class="tabs">
+    <button (click)="currentTab = 'search'" [class.active]="currentTab === 'search'">
+      Search Food
+    </button>
+    <button (click)="currentTab = 'log'" [class.active]="currentTab === 'log'">
+      Log Food
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <ng-container *ngIf="currentTab === 'search'">
+      <app-food-list />
+    </ng-container>
+
+    <ng-container *ngIf="currentTab === 'log'">
+      <app-log-food />
+    </ng-container>
+  </div>
+</section>
