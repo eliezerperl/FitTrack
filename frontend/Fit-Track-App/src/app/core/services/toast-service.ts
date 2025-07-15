@@ -14,4 +14,12 @@ export class ToastService {
       positionClass: 'toast-top-left',
     });
   }
+
+  failToast(desc?: string, headline: string = 'Something went wrong') {
+    this.toastr.error(desc, headline, {
+      timeOut: 2000,
+      progressBar: true,
+      positionClass: 'toast-top-right',
+    });
+  }
 }

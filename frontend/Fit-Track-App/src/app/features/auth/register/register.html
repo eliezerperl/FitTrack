@@ -1,0 +1,21 @@
+<div class="auth-wrapper">
+  <form (ngSubmit)="register()" [formGroup]="registerForm" class="auth-form">
+    <h2>Register</h2>
+
+    <label>Username</label>
+    <input type="text" formControlName="username" placeholder="Enter username" />
+
+    <label>Password</label>
+    <input type="password" formControlName="password" placeholder="Enter password" />
+
+    <label>Confirm Password</label>
+    <input type="password" formControlName="confirmPassword" placeholder="Confirm password" />
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+
+    <p class="switch-link">
+      Already have an account?
+      <a routerLink="/login">Login here</a>
+    </p>
+  </form>
+</div>
