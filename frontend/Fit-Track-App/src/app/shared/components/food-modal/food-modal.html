@@ -1,6 +1,6 @@
 <div class="modal" *ngIf="food">
   <h2>{{ food.description }}</h2>
-  <ul>
+  <ul class="modal-list">
     <li
       *ngFor="let nutrient of food.foodNutrients"
       (click)="openNutrientModal(nutrient)"

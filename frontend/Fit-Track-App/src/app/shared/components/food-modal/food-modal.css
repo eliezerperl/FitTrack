@@ -1,12 +1,24 @@
 .modal {
-
-
+  position: fixed;
+  top: 20%;
+  left: 50%;
   transform: translateX(-50%);
   background: white;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  max-height: 55vh; /* prevent modal from exceeding viewport */
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-list {
+  overflow-y: auto;
+  flex: 1; /* take available space in modal */
+  margin-top: 1rem;
 }
 
 .clickable {
