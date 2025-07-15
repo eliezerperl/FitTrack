@@ -25,7 +25,21 @@ namespace Fit_Track_API.Controllers {
 		public async Task<IActionResult> Login([FromBody] AuthRequestDto authRequestDto) {
 			var token = await _authService.LoginPipeAsync(authRequestDto);
 
-			return Ok(token);
+			Response.Cookies.Append("jwtToken", token, new CookieOptions
+			{
+				Expires = DateTime.UtcNow.AddMinutes(60),
+				HttpOnly = true,
+				SameSite = SameSiteMode.Strict,
+				//Secure = true, //send through HTTPS only
+			});
+
+			return Ok(new { Token = token });
+		}
+
+		[HttpPost("logout")]
+		public IActionResult Logout() {
+			Response.Cookies.Delete("jwtToken");
+			return NoContent(); // 204
 		}
 	}
 }

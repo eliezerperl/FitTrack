@@ -1,4 +1,4 @@
-using Fit_Track_API.Data;
+﻿using Fit_Track_API.Data;
 using Fit_Track_API.External;
 using Fit_Track_API.Middleware;
 using Fit_Track_API.Repositories;
@@ -80,7 +80,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AngularApp");
 
-//app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
