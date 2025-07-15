@@ -44,7 +44,9 @@ namespace Fit_Track_API.Repositories {
 
 		public async Task<IEnumerable<T>> GetByUserIdAsync(Guid userId) {
 			var entities = await _dbSet.Where(e => e.UserId == userId).ToListAsync();
-			if (entities == null || !entities.Any())
+			if (entities == null)
+				throw new NullReferenceException($"Entities searched for user with ID {userId} came back null.");
+			if (!entities.Any())
 				throw new ArgumentException($"No entities found for user with ID {userId}.");
 			return entities;
 		}

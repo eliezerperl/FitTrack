@@ -14,7 +14,7 @@ namespace Fit_Track_API.External {
 				$"?query={foodName}&dataType=Survey%20%28FNDDS%29" +
 				$"&requireAllWords=true&api_key={_config["Food_Api_Key"]}");
 
-			response.EnsureSuccessStatusCode();
+			response.EnsureSuccessStatusCode(); //Throws an HttpRequestException if the status code is not successful
 			var body = await response.Content.ReadAsStringAsync();
 			return body;
 		}

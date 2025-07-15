@@ -63,7 +63,7 @@
 			};
 
 			using var response = await _httpClient.SendAsync(request);
-			response.EnsureSuccessStatusCode();
+			response.EnsureSuccessStatusCode(); //Throws an HttpRequestException if the status code is not successful
 
 			var contentType = response.Content.Headers.ContentType?.ToString() ?? "image/gif";
 			var imageBytes = await response.Content.ReadAsByteArrayAsync();
@@ -86,7 +86,7 @@
 			//	},
 			//};
 			//using (var response = await _httpClient.SendAsync(request)) {
-			//	response.EnsureSuccessStatusCode();
+			//	response.EnsureSuccessStatusCode(); //Throws an HttpRequestException if the status code is not successful
 			//	return await response.Content.ReadAsStringAsync();
 			//}
 			switch (slug) {

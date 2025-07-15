@@ -17,7 +17,7 @@ namespace Fit_Track_API.Services {
 			_workoutApiClient = workoutApiClient ?? throw new ArgumentNullException(nameof(workoutApiClient));
 			_workoutRepo = workoutRepository;
 		}
-
+		// Exception throwing in Repository Layer
 		// Create
 		public async Task<WorkoutEntry> CreateAsync(WorkoutEntry workoutEntryDto, Guid userId, User user) {
 			WorkoutEntry workoutEntry = new WorkoutEntry {
@@ -46,23 +46,16 @@ namespace Fit_Track_API.Services {
 		// Get By Workout Id
 		public async Task<WorkoutEntry> GetByIdAsync(Guid id) {
 			WorkoutEntry workoutEntry = await _workoutRepo.GetByIdAsync(id);
-			if (workoutEntry == null) {
-				throw new NullReferenceException($"Workout entry with ID {id} does not exist.");
-			}
+
 			return workoutEntry;
 		}
 
 		// Get By User Id
-		//public async Task<IEnumerable<WorkoutEntry>> GetByUserIdAsync(Guid userId) {
-		//	List<WorkoutEntry> userWorkouts = await _workoutRepo.GetByUserIdAsync(userId);
-		//	if (userWorkouts == null) {
-		//		throw new NullReferenceException($"No workouts found for user with ID {userId}.");
-		//	}
-		//	if (userWorkouts.Count == 0) {
-		//		throw new ArgumentException($"No workouts found for user with ID {userId}.");
-		//	}
-		//	return userWorkouts;
-		//}
+		public async Task<IEnumerable<WorkoutEntry>> GetByUserIdAsync(Guid userId) {
+			IEnumerable<WorkoutEntry> userWorkouts = await _workoutRepo.GetByUserIdAsync(userId);
+
+			return userWorkouts;
+		}
 
 		// Update
 		public async Task<WorkoutEntry> UpdateAsync(Guid id, WorkoutEntry workoutEntryDto) {

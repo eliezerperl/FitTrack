@@ -16,7 +16,7 @@ namespace Fit_Track_API.Services {
 			_foodApiClient = foodApiClient ?? throw new ArgumentNullException(nameof(foodApiClient));
 			_foodRepo = foodRepository;
 		}
-
+		// Exception throwing in Repository Layer
 		// Create a new food entry
 		public async Task<FoodEntry> CreateAsync(FoodEntry foodEntryDto, Guid userId, User user) {
 			FoodEntry foodEntry = new FoodEntry {
@@ -39,24 +39,16 @@ namespace Fit_Track_API.Services {
 		// Get food entry by ID
 		public async Task<FoodEntry> GetByIdAsync(Guid id) {
 			FoodEntry foodEntry = await _foodRepo.GetByIdAsync(id);
-			if (foodEntry == null) {
-				throw new NullReferenceException($"Food entry with ID {id} does not exist.");
-			}
+
 			return foodEntry;
 		}
 
 		// Get food entries by user ID
-		//public async Task<IEnumerable<FoodEntry>> GetByUserIdAsync(Guid userId) {
-		//	List<FoodEntry> foodEntries = await _foodRepo.GetByUserIdAsync(userId);
-		//	if (foodEntries == null) {
-		//		throw new NullReferenceException($"No food entries found for user with ID {userId}.");
-		//	}
-		//	if (foodEntries.Count == 0) {
-		//		throw new ArgumentException($"No food entries found for user with ID {userId}.");
-		//	}
+		public async Task<IEnumerable<FoodEntry>> GetByUserIdAsync(Guid userId) {
+			IEnumerable<FoodEntry> foodEntries = await _foodRepo.GetByUserIdAsync(userId);
 
-		//	return foodEntries;
-		//}
+			return foodEntries;
+		}
 
 		// Update a food entry
 		public async Task<FoodEntry> UpdateAsync(Guid id, FoodEntry foodEntryDto) {
