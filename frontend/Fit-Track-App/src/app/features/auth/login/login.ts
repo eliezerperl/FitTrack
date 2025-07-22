@@ -39,7 +39,7 @@ export class Login {
       this.authService.login(user).subscribe({
         next: (res) => {
           console.log(res);
-          this.toastService.successToast('Logged in!!');
+          this.toastService.successToast('Logged in!');
         },
         error: (err) => {
           console.log(err);

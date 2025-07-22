@@ -29,8 +29,8 @@ namespace Fit_Track_API.Controllers {
 			{
 				Expires = DateTime.UtcNow.AddMinutes(60),
 				HttpOnly = true,
-				SameSite = SameSiteMode.Strict,
-				//Secure = true, //send through HTTPS only
+				SameSite = SameSiteMode.None,
+				Secure = true, 
 			});
 
 			return Ok(new { Token = token });
