@@ -8,6 +8,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { ToastService } from '../../../core/services/toast-service';
 import { AuthService } from '../../../core/services/auth-service';
+import { SharedService } from '../../../core/services/shared-service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ export class Register {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private sharedService: SharedService
   ) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -43,16 +45,7 @@ export class Register {
         username: this.registerForm.value.username,
         password: this.registerForm.value.password,
       };
-      this.authService.register(user).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.toastService.successToast('Registered!');
-        },
-        error: (err) => {
-          console.log(err);
-          this.toastService.failToast();
-        },
-      });
+      this.sharedService.registerThenLogin(user);
     }
   }
 }

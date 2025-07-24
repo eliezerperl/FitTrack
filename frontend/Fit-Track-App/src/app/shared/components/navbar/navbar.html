@@ -1,0 +1,10 @@
+<nav class="navbar">
+  <h1 class="logo">FitTrack</h1>
+  <ul class="nav-links" *ngIf="isLoggedIn">
+    <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li><a routerLink="/food" routerLinkActive="active">Food</a></li>
+    <li><a routerLink="/fitness" routerLinkActive="active">Fitness</a></li>
+    <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>

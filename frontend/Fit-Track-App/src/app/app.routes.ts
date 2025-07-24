@@ -3,6 +3,8 @@ import { Fitness } from './features/fitness/fitness';
 import { Food } from './features/food/food';
 import { Login } from './features/auth/login/login';
 import { Register } from './features/auth/register/register';
+import { Dashboard } from './features/dashboard/dashboard';
+import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -10,5 +12,6 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'food', component: Food },
   { path: 'fitness', component: Fitness },
-  { path: '**', redirectTo: 'login' },
+  { path: 'dashboard', component: Dashboard },
+  { path: '**', component: NotFound },
 ];

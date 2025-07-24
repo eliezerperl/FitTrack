@@ -20,4 +20,8 @@ export class AuthService {
   register(authRequest: AuthRequest): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/register`, authRequest);
   }
+
+  logout() {
+    return this.http.post(`${this.apiUrl}/logout`, {})
+  }
 }

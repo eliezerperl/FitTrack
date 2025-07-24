@@ -38,7 +38,12 @@ namespace Fit_Track_API.Controllers {
 
 		[HttpPost("logout")]
 		public IActionResult Logout() {
-			Response.Cookies.Delete("jwtToken");
+			Response.Cookies.Delete("jwtToken", new CookieOptions
+			{
+				HttpOnly = true,
+				SameSite = SameSiteMode.None,
+				Secure = true,
+			});
 			return NoContent(); // 204
 		}
 	}
