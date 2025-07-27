@@ -22,7 +22,7 @@ namespace Fit_Track_API.Services {
 		public async Task<WorkoutEntry> CreateAsync(WorkoutEntry workoutEntryDto, Guid userId, User user) {
 			WorkoutEntry workoutEntry = new WorkoutEntry {
 				UserId = userId,
-				User = user, // Set the User navigational property
+				//User = user, // Set the User navigational property
 				ExerciseId = workoutEntryDto.ExerciseId,
 				ExerciseName = workoutEntryDto.ExerciseName,
 				Date = workoutEntryDto.Date,

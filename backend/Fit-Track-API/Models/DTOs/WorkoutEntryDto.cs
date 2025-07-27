@@ -16,7 +16,6 @@ namespace Fit_Track_API.Models.DTOs {
 		public double? Weight { get; set; }
 
 		public TimeSpan? Duration { get; set; }
-		public double? DistanceKm { get; set; }
 
 		public string? Notes { get; set; }  
 	}

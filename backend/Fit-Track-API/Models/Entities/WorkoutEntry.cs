@@ -5,7 +5,7 @@ namespace Fit_Track_API.Models.Entities {
 		public Guid Id { get; set; } = Guid.NewGuid();
 
 		public Guid UserId { get; set; } // I set this in contoller from request data
-		public User User { get; set; } // Navigational Property
+		public User? User { get; set; } // Navigational Property
 
 		[Required(ErrorMessage = "ExerciseId is required")]
 		public string ExerciseId { get; set; }

@@ -55,7 +55,7 @@ namespace Fit_Track_API.Repositories {
 
 			List<Claim> claims = new List<Claim>
 			{
-				new Claim("id", user.Id.ToString()),
+				new Claim("id", user.UserId.ToString()),
 				new Claim("username", user.UserName),
 				//new Claim(ClaimTypes.Role, user.Role.ToString())
 			};

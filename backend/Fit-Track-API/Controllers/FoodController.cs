@@ -9,9 +9,11 @@ namespace Fit_Track_API.Controllers {
 	public class FoodController : ControllerBase {
 
 		private readonly IFoodService _foodService;
+		private readonly IUserService _userService;
 
-		public FoodController(IFoodService foodService) {
+		public FoodController(IFoodService foodService, IUserService userService) {
 			_foodService = foodService ?? throw new ArgumentNullException(nameof(foodService));
+			_userService = userService ?? throw new ArgumentNullException(nameof(userService));
 		}
 		// FOOD ENTRY CRUD OPERATIONS
 		[HttpPost]
@@ -19,8 +21,8 @@ namespace Fit_Track_API.Controllers {
 			if (!ModelState.IsValid) {
 				return BadRequest(ModelState);
 			}
-			var userId = Guid.NewGuid(); // This should be replaced with the actual user ID from the authenticated user context
-			var user = new User { Id = userId }; // This should be replaced with the actual user object from the authenticated user context
+			var userId = foodEntry.UserId;
+			var user = await _userService.GetByIdAsync(userId);
 			var createdEntry = await _foodService.CreateAsync(foodEntry, userId, user);
 			return CreatedAtAction(nameof(GetAllFoodEntries), new { id = createdEntry.Id }, createdEntry);
 		}
@@ -42,15 +44,15 @@ namespace Fit_Track_API.Controllers {
 			return Ok(foodEntry);
 		}
 
-		//[HttpGet]
-		//[Route("user/{userId}")]
-		//public async Task<IActionResult> GetFoodEntriesByUserId(Guid userId) {
-		//	var userFoodEnteries = await _foodService.GetByUserIdAsync(userId);
-		//	if (userFoodEnteries == null || !userFoodEnteries.Any()) {
-		//		return NotFound($"No Food Enteries found for user with ID {userId}.");
-		//	}
-		//	return Ok(userFoodEnteries);
-		//}
+		[HttpGet]
+		[Route("user/{userId}")]
+		public async Task<IActionResult> GetFoodEntriesByUserId(Guid userId) {
+			var userFoodEnteries = await _foodService.GetByUserIdAsync(userId);
+			if (userFoodEnteries == null || !userFoodEnteries.Any()) {
+				return NotFound($"No Food Enteries found for user with ID {userId}.");
+			}
+			return Ok(userFoodEnteries);
+		}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateFoodEntry(Guid id, [FromBody] FoodEntry foodEntry) {

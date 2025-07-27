@@ -3,10 +3,10 @@ using System.Data;
 using System.Security.Principal;
 
 namespace Fit_Track_API.Models.Entities {
-	public class User {
+	public class User: IEntity {
 
 		[Key]
-		public Guid Id { get; set; } = Guid.NewGuid();
+		public Guid UserId { get; set; } = Guid.NewGuid();
 
 		public string UserName { get; set; }
 

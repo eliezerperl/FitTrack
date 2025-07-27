@@ -11,9 +11,12 @@ namespace Fit_Track_API.Controllers {
 	public class WorkoutController : ControllerBase {
 
 		private readonly IWorkoutService _workoutService;
+		private readonly IUserService _userService;
 
-		public WorkoutController(IWorkoutService workoutService) {
+
+		public WorkoutController(IWorkoutService workoutService, IUserService userService) {
 			_workoutService = workoutService ?? throw new ArgumentNullException(nameof(workoutService));
+			_userService = userService;
 		}
 		//WORKOUT ENTRY CRUD OPERATIONS
 		[HttpPost]
@@ -21,10 +24,13 @@ namespace Fit_Track_API.Controllers {
 			if (!ModelState.IsValid) {
 				return BadRequest(ModelState);
 			}
-			var userId = Guid.NewGuid(); // This should be replaced with the actual user ID from the authenticated user context
-			var user = new User { Id = userId }; // This should be replaced with the actual user object from the authenticated user context
-			var createdEntry = await _workoutService.CreateAsync(workoutEntry, userId, user);
-			return CreatedAtAction(nameof(GetAllWorkouts), new { id = createdEntry.Id }, createdEntry);
+			Guid userId = workoutEntry.UserId;
+			if (!String.IsNullOrEmpty(userId.ToString())) {
+				var user = await _userService.GetByIdAsync(userId);
+				var createdEntry = await _workoutService.CreateAsync(workoutEntry, userId, user);
+				return CreatedAtAction(nameof(GetAllWorkouts), new { id = createdEntry.Id }, createdEntry);
+			}
+			return BadRequest("No user");
 		}
 
 		[HttpGet]
@@ -44,15 +50,15 @@ namespace Fit_Track_API.Controllers {
 			return Ok(workout);
 		}
 
-		//[HttpGet]
-		//[Route("user/{userId}")]
-		//public async Task<IActionResult> GetWorkoutsByUserId(Guid userId) {
-		//	var userWorkouts = await _workoutService.GetByUserIdAsync(userId);
-		//	if (userWorkouts == null || !userWorkouts.Any()) {
-		//		return NotFound($"No workouts found for user with ID {userId}.");
-		//	}
-		//	return Ok(userWorkouts);
-		//}
+		[HttpGet]
+		[Route("user/{userId}")]
+		public async Task<IActionResult> GetWorkoutsByUserId(Guid userId) {
+			var userWorkouts = await _workoutService.GetByUserIdAsync(userId);
+			if (userWorkouts == null || !userWorkouts.Any()) {
+				return NotFound($"No workouts found for user with ID {userId}.");
+			}
+			return Ok(userWorkouts);
+		}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateWorkout(Guid id, [FromBody] WorkoutEntry workoutEntry) {

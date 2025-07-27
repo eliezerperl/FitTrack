@@ -11,7 +11,7 @@ namespace Fit_Track_API.Services.Interfaces {
 		// Get All
 		Task<IEnumerable<T>> GetAllAsync();
 
-		// Get By Workout Id
+		// Get By  Id
 		Task<T> GetByIdAsync(Guid id);
 
 		// Get By User Id

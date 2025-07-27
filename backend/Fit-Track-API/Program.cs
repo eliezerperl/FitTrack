@@ -2,6 +2,7 @@
 using Fit_Track_API.External;
 using Fit_Track_API.Middleware;
 using Fit_Track_API.Repositories;
+using Fit_Track_API.Repositories.Interfaces;
 using Fit_Track_API.Repositories.InterFaces;
 using Fit_Track_API.Services;
 using Fit_Track_API.Services.Interfaces;
@@ -37,10 +38,12 @@ builder.Services.AddHttpClient<WorkoutApiClient>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 builder.Services.AddScoped<IFoodService, FoodService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options => {
