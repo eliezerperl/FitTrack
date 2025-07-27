@@ -11,6 +11,7 @@ import { WorkoutService } from '../../../core/services/workout-service';
 import { CommonModule } from '@angular/common';
 import { LoggedWorkout } from '../../../core/models/log-workout-model';
 import { ToastService } from '../../../core/services/toast-service';
+import { SharedService } from '../../../core/services/shared-service';
 
 @Component({
   selector: 'app-log-workout',
@@ -29,16 +30,19 @@ export class LogWorkout implements OnInit {
   equipmentList: string[] = [];
   exercises: Exercise[] = [];
   loading = false;
+  userId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private workoutService: WorkoutService,
+    private sharedService: SharedService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
+    this.sharedService.userId$.subscribe((id) => (this.userId = id));
+
     this.workoutForm = this.fb.group({
-      // workoutType: ['', Validators.required],
       exerciseId: ['', Validators.required],
       exerciseName: ['', Validators.required],
       date: ['', Validators.required],
@@ -46,7 +50,6 @@ export class LogWorkout implements OnInit {
       reps: [null],
       weight: [null],
       duration: [null],
-      // distanceKm: [null],
       notes: [''],
       searchType: ['bodyPart'],
       searchValue: [''],
@@ -92,20 +95,6 @@ export class LogWorkout implements OnInit {
     this.fetchExercisesByFilter();
   }
 
-  onWorkoutTypeChange(): void {
-    const type = this.workoutForm.get('workoutType')?.value;
-
-    // Clear irrelevant fields
-    if (type === 'strength') {
-      this.workoutForm.get('duration')?.reset();
-      this.workoutForm.get('distanceKm')?.reset();
-    } else {
-      this.workoutForm.get('sets')?.reset();
-      this.workoutForm.get('reps')?.reset();
-      this.workoutForm.get('weight')?.reset();
-    }
-  }
-
   fetchExercisesByFilter() {
     this.loading = true;
     const type = this.workoutForm.get('searchType')?.value;
@@ -137,22 +126,35 @@ export class LogWorkout implements OnInit {
       const formValue = this.workoutForm.value;
 
       const workoutEntry: LoggedWorkout = {
-        id: '00000000-0000-0000-0000-000000000000',
-        userId: '00000000-0000-0000-0000-000000000000',
+        // id: '00000000-0000-0000-0000-000000000000',
+        userId: this.userId ?? '00000000-0000-0000-0000-000000000000',
         exerciseId: formValue.exerciseId,
         exerciseName: formValue.exerciseName,
         date: formValue.date,
         sets: Number(formValue.sets ?? 0),
         reps: Number(formValue.reps ?? 0),
         weight: formValue.weight,
-        duration: formValue.duration,
+        duration: this.formatDuration(formValue.duration),
         notes: formValue.notes,
       };
 
       this.workoutService.createWorkout(workoutEntry).subscribe((res) => {
         console.log('Workout created:', res);
-        this.toastService.successToast('Workout logged successfully!', 'Success')
+        this.toastService.successToast(
+          'Workout logged successfully!',
+          'Success'
+        );
       });
     }
+  }
+  formatDuration(input: string): string {
+    if (!input.includes(':')) {
+      return `00:${input.padStart(2, '0')}:00`;
+    }
+    const parts = input.split(':');
+    if (parts.length === 2) {
+      return `00:${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
+    }
+    return input;
   }
 }

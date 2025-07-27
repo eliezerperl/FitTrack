@@ -1,4 +1,16 @@
+import { LoggedFood } from './log-food-model';
+import { LoggedWorkout } from './log-workout-model';
+
 export interface User {
-  Id: string,
-  username: string
+  id: string;
+
+  userName: string;
+
+  passwordHash: string;
+
+  passwordSalt: string;
+
+  workoutEntries: LoggedWorkout[];
+
+  foodEntries: LoggedFood[];
 }

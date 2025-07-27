@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ToastService } from './toast-service';
-import { User } from '../models/user-model';
 import { AuthRequest } from '../models/auth-request-model';
 
 @Injectable({
@@ -14,6 +13,12 @@ export class SharedService {
   isAuthenticated$: Observable<boolean> =
     this.isAuthenticatedSubject.asObservable();
 
+  private userIdSubject = new BehaviorSubject<string | null>(null);
+  userId$: Observable<string | null> = this.userIdSubject.asObservable();
+
+  private usernameSubject = new BehaviorSubject<string | null>(null);
+  username$: Observable<string | null> = this.usernameSubject.asObservable();
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -22,6 +27,25 @@ export class SharedService {
 
   setAuthenticated(value: boolean) {
     this.isAuthenticatedSubject.next(value);
+  }
+
+  private parseJwt(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      const decoded = atob(payload);
+      return JSON.parse(decoded);
+    } catch (e) {
+      console.error('Error parsing token', e);
+      return null;
+    }
+  }
+
+  private storeAndExtractClaims(token: string) {
+    const decodedToken = this.parseJwt(token);
+    if (decodedToken) {
+      this.userIdSubject.next(decodedToken.id || null);
+      this.usernameSubject.next(decodedToken.username || null);
+    }
   }
 
   registerThenLogin(req: AuthRequest) {
@@ -45,6 +69,7 @@ export class SharedService {
         console.log(res);
         this.toastService.successToast('Logged in!');
         this.setAuthenticated(true);
+        this.storeAndExtractClaims(res.token);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
@@ -60,10 +85,13 @@ export class SharedService {
         this.setAuthenticated(false);
         this.router.navigate(['/']);
         this.toastService.successToast('Logged out');
+        this.userIdSubject.next(null);
+        this.usernameSubject.next(null);
       },
       error: (err) => {
-        this.setAuthenticated(false);
+        this.toastService.failToast('Logout failed');
         console.log(err);
+        this.setAuthenticated(false);
       },
     });
   }
