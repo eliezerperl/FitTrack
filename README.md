@@ -76,5 +76,7 @@ Instructions for running locally, using Docker, and publishing builds will be ad
 
 ## 🙌 Contributions
 
-Pull requests and feature suggestions are welcome once the project reaches MVP.
+Contributions are welcome!  
+If you have ideas for features, UI improvements, bug fixes, or performance optimizations — feel free to open an issue or submit a pull request.  
+Let's build something awesome together 💪
 
