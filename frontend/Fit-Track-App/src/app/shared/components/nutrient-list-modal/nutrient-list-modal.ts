@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FoodNutrient } from '../../../core/models/food-nutrient-model';
+import { NutrientEntry } from '../../../core/models/food-nutrient-model';
 import { CommonModule } from '@angular/common';
 import { NutrientModal } from '../nutrient-modal/nutrient-modal';
 
@@ -10,12 +10,12 @@ import { NutrientModal } from '../nutrient-modal/nutrient-modal';
   styleUrl: './nutrient-list-modal.css'
 })
 export class NutrientListModal {
-  @Input() nutrients: FoodNutrient[] = [];
+  @Input() nutrients: NutrientEntry[] = [];
   @Output() close = new EventEmitter<void>();
 
-  selectedNutrient: FoodNutrient | null = null;
+  selectedNutrient: NutrientEntry | null = null;
 
-  openNutrient(nutrient: FoodNutrient) {
+  openNutrient(nutrient: NutrientEntry) {
     this.selectedNutrient = nutrient;
   }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FoodNutrient } from '../../../core/models/food-nutrient-model';
+import { NutrientEntry } from '../../../core/models/food-nutrient-model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './nutrient-modal.css'
 })
 export class NutrientModal {
-  @Input() nutrient: FoodNutrient | null = null;
+  @Input() nutrient: NutrientEntry | null = null;
   @Output() close = new EventEmitter<void>();
 }

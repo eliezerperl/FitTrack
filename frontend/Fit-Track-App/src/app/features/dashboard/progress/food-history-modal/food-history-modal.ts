@@ -3,6 +3,7 @@ import { LoggedFood } from '../../../../core/models/log-food-model';
 import { CommonModule } from '@angular/common';
 import { NutrientEntry } from '../../../../core/models/food-nutrient-model';
 import { NutrientListModal } from '../../../../shared/components/nutrient-list-modal/nutrient-list-modal';
+import { FoodService } from '../../../../core/services/food-service';
 
 @Component({
   selector: 'app-food-history-modal',
@@ -18,9 +19,18 @@ export class FoodHistoryModal {
   showNutrientModal = false;
   selectedNutrients: NutrientEntry[] = [];
 
-  openNutrientListModal(nutrients: NutrientEntry[]): void {
-    this.selectedNutrients = nutrients;
-    this.showNutrientModal = true;
+  constructor(private foodService: FoodService) {}
+
+  openNutrientListModal(food: string): void {
+    this.foodService.searchFoodNutrients(food).subscribe({
+      next: (res) => {
+        this.selectedNutrients = res;
+        this.showNutrientModal = true;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   closeNutrientListModal(): void {

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FoodService } from '../../../core/services/food-service';
-import { FoodNutrient } from '../../../core/models/food-nutrient-model';
+import { FoodNutrient, NutrientEntry } from '../../../core/models/food-nutrient-model';
 import { ToastService } from '../../../core/services/toast-service';
 import { CommonModule } from '@angular/common';
 import { LoggedFood } from '../../../core/models/log-food-model';
@@ -24,7 +24,7 @@ export class LogFood {
   foodForm!: FormGroup;
   searchQuery = '';
   foodResults: any[] = [];
-  nutrients: FoodNutrient[] = [];
+  nutrients: NutrientEntry[] = [];
   loading = false;
   showNutrients = false;
   userId: string | null = null;
@@ -74,11 +74,11 @@ export class LogFood {
   submit(): void {
     if (this.foodForm.valid) {
 
-      const mappedNutrients = this.nutrients.map(n => ({
-        name: n.nutrientName,
-        unit: n.unitName,
-        value: n.value,
-      }));
+      // const mappedNutrients = this.nutrients.map(n => ({
+      //   name: n.nutrientName,
+      //   unit: n.unitName,
+      //   value: n.value,
+      // }));
 
       this.loading = true;
       const entry: LoggedFood = {
@@ -88,8 +88,8 @@ export class LogFood {
         foodName: this.foodForm.value.foodName,
         quantity: this.foodForm.value.quantity,
         notes: this.foodForm.value.notes,
-        date: new Date(),
-        nutrients: mappedNutrients,
+        dateLogged: new Date(),
+        nutrients: this.nutrients,
       };
       console.log('Sending to backend:', entry);
       this.foodService.createFoodEntry(entry).subscribe({

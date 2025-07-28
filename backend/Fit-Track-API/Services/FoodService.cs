@@ -82,6 +82,25 @@ namespace Fit_Track_API.Services {
 			return foods;
 		}
 
+		public async Task<List<Nutrient>> GetFoodNutrientsByNameAsync(string foodName) {
+			string foodData = await _foodApiClient.GetFoodsDataAsync(foodName);
 
+			if (foodData == null || !foodData.Any()) {
+				throw new ArgumentException($"No food found with the name: {foodName}");
+			}
+
+			var response = JsonConvert.DeserializeObject<FoodSearchResponse>(foodData);
+			List<Nutrient> nutrients = response.Foods
+				.SelectMany(food => food.FoodNutrients ?? new List<FoodNutrientDto>())
+				.Select(n => new Nutrient
+				{
+					Name = n.NutrientName,
+					Unit = n.UnitName,
+					Value = n.Value
+				})
+				.ToList();
+
+			return nutrients;
+		}
 	}
 }

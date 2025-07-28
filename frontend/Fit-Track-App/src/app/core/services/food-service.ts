@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Food } from '../models/food-model';
 import { Observable } from 'rxjs';
 import { LoggedFood } from '../models/log-food-model';
+import { NutrientEntry } from '../models/food-nutrient-model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,11 @@ export class FoodService {
   searchFoods(food: string): Observable<Food[]> {
     return this.http.get<Food[]>(`${this.apiUrl}/${food}`);
   }
+
+  searchFoodNutrients(food: string): Observable<NutrientEntry[]> {
+    return this.http.get<NutrientEntry[]>(`${this.apiUrl}/nutrients/${food}`);
+  }
+
 
   createFoodEntry(foodEntry: LoggedFood): Observable<LoggedFood> {
     return this.http.post<LoggedFood>(`${this.apiUrl}`, foodEntry);

@@ -85,5 +85,16 @@ namespace Fit_Track_API.Controllers {
 
 			return Ok(foodData);
 		}
+
+		[HttpGet("nutrients/{food}")]
+		public async Task<IActionResult> GetFoodNutrientsByName(string food) {
+			var nutrients = await _foodService.GetFoodNutrientsByNameAsync(food);
+
+			if (nutrients == null || !nutrients.Any()) {
+				return NotFound($"No food data found for '{food}'.");
+			}
+
+			return Ok(nutrients);
+		}
 	}
 }

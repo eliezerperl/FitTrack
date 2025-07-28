@@ -1,4 +1,4 @@
-import { NutrientEntry } from './food-nutrient-model';
+import { FoodNutrient, NutrientEntry } from './food-nutrient-model';
 
 export interface LoggedFood {
   id: string;
@@ -7,6 +7,6 @@ export interface LoggedFood {
   foodName: string;
   quantity: number;
   nutrients: NutrientEntry[];
-  date: Date;
+  dateLogged: Date;
   notes?: string;
 }

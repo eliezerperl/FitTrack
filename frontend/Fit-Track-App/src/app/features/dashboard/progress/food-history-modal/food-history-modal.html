@@ -22,11 +22,11 @@
           <td>{{ entry.foodName || '-' }}</td>
           <td>{{ entry.quantity || '-' }}</td>
           <td>
-            <button (click)="openNutrientListModal(entry.nutrients)">
+            <button (click)="openNutrientListModal(entry.foodName)">
               View Nutrients
             </button>
           </td>
-          <td>{{ entry.date | date:'shortDate' }}</td>
+          <td>{{ entry.dateLogged | date:'shortDate' }}</td>
           <td>{{ entry.notes || '-' }}</td>
         </tr>
       </tbody>
@@ -36,5 +36,6 @@
 
 <app-nutrient-list-modal
   *ngIf="showNutrientModal"
+  [nutrients]="selectedNutrients"
   (close)="closeNutrientListModal()">
 </app-nutrient-list-modal>

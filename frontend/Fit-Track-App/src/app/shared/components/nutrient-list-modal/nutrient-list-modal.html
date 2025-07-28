@@ -1,3 +1,5 @@
+<div class="modal-backdrop" (click)="close.emit()"></div>
+
 <div class="modal">
   <h2>Nutrients</h2>
   <ul class="modal-list">
@@ -6,7 +8,7 @@
       (click)="openNutrient(nutrient)"
       class="clickable"
     >
-      {{ nutrient.nutrientName }}
+      {{ nutrient.name }}
     </li>
   </ul>
   <button (click)="close.emit()">Close</button>
