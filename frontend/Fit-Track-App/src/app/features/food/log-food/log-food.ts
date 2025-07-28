@@ -12,6 +12,7 @@ import { ToastService } from '../../../core/services/toast-service';
 import { CommonModule } from '@angular/common';
 import { LoggedFood } from '../../../core/models/log-food-model';
 import { NutrientListModal } from '../../../shared/components/nutrient-list-modal/nutrient-list-modal';
+import { SharedService } from '../../../core/services/shared-service';
 
 @Component({
   selector: 'app-log-food',
@@ -26,17 +27,22 @@ export class LogFood {
   nutrients: FoodNutrient[] = [];
   loading = false;
   showNutrients = false;
+  userId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private foodService: FoodService,
+    private sharedService: SharedService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
+    this.sharedService.userId$.subscribe((id) => (this.userId = id));
+
     this.foodForm = this.fb.group({
       searchQuery: [''],
       foodName: ['', Validators.required],
+      foodId: [''],
       quantity: [1, [Validators.required, Validators.min(1)]],
       notes: [''],
     });
@@ -60,7 +66,7 @@ export class LogFood {
   }
 
   selectFood(food: any): void {
-    this.foodForm.patchValue({ foodName: food.description });
+    this.foodForm.patchValue({ foodName: food.description, foodId: food.fdcId });
     this.nutrients = food.foodNutrients;
     this.foodResults = [];
   }
@@ -76,8 +82,9 @@ export class LogFood {
 
       this.loading = true;
       const entry: LoggedFood = {
-        foodId: crypto.randomUUID(),
-        userId: '00000000-0000-0000-0000-000000000000',
+        id: crypto.randomUUID(),
+        foodId: this.foodForm.value.foodId,
+        userId: this.userId ?? '00000000-0000-0000-0000-000000000000',
         foodName: this.foodForm.value.foodName,
         quantity: this.foodForm.value.quantity,
         notes: this.foodForm.value.notes,
@@ -94,6 +101,7 @@ export class LogFood {
         error: (err) => {
           console.log(err);
           this.loading = false;
+          this.toastService.failToast('Food entry failed');
         },
       });
     }

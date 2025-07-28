@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Fit_Track_API.Models.Entities {
 	public class WorkoutEntry : IEntity {
 		public Guid Id { get; set; } = Guid.NewGuid();
 
 		public Guid UserId { get; set; } // I set this in contoller from request data
+
+		[JsonIgnore]
 		public User? User { get; set; } // Navigational Property
 
 		[Required(ErrorMessage = "ExerciseId is required")]

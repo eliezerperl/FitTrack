@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Fit_Track_API.Models.Entities {
 	public class FoodEntry : IEntity {
 		public Guid Id { get; set; } = Guid.NewGuid();
 
 		public Guid UserId { get; set; } // Set in controller via request
+
+		[JsonIgnore]
 		public User? User { get; set; } // Navigational Property
 
 

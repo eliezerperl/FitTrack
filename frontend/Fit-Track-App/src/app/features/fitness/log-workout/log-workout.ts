@@ -138,12 +138,15 @@ export class LogWorkout implements OnInit {
         notes: formValue.notes,
       };
 
-      this.workoutService.createWorkout(workoutEntry).subscribe((res) => {
-        console.log('Workout created:', res);
-        this.toastService.successToast(
-          'Workout logged successfully!',
-          'Success'
-        );
+      this.workoutService.createWorkout(workoutEntry).subscribe({
+        next: (res) => {
+          console.log('Workout created:', res);
+          this.toastService.successToast('Workout logged successfully!');
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastService.failToast('Workout log failed');
+        },
       });
     }
   }
