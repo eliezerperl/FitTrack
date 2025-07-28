@@ -11,6 +11,8 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: var(--color-card, #f4f4f4);
 }
 
 .log-form {

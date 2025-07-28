@@ -2,28 +2,21 @@
   <!-- Tabs -->
   <div class="tabs">
     <button
-      (click)="currentTab = 'search'"
-      [class.active]="currentTab === 'search'"
+      [routerLink]="['/fitness/search']"
+      routerLinkActive="router-link-active"
     >
       Search Workouts
     </button>
-    <button (click)="currentTab = 'log'" [class.active]="currentTab === 'log'">
+    <button
+      [routerLink]="['/fitness/log']"
+      routerLinkActive="router-link-active"
+    >
       Log Workout
     </button>
   </div>
 
   <!-- Tab Content -->
-  <div class="tab-content">
-    <!-- Search Tab -->
-    <ng-container *ngIf="currentTab === 'search'" class="search-tab">
-      <!-- Filter Type Selection -->
-      <app-search-workouts />
-    </ng-container>
-
-    <!-- Log Tab -->
-    <div *ngIf="currentTab === 'log'" class="log-tab">
-      <h2>Log Workout</h2>
-      <app-log-workout />
-    </div>
+  <div class="content">
+    <router-outlet></router-outlet>
   </div>
 </section>

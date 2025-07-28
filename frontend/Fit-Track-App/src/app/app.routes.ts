@@ -7,13 +7,27 @@ import { Dashboard } from './features/dashboard/dashboard';
 import { NotFound } from './features/not-found/not-found';
 import { Progress } from './features/dashboard/progress/progress';
 import { DashboardHome } from './features/dashboard/dashboard-home/dashboard-home';
+import { SearchWorkouts } from './features/fitness/search-workouts/search-workouts';
+import { LogWorkout } from './features/fitness/log-workout/log-workout';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'food', component: Food },
-  { path: 'fitness', component: Fitness },
+  {
+    path: 'fitness',
+    component: Fitness,
+    children: [
+      { path: 'search', component: SearchWorkouts },
+      { path: 'log', component: LogWorkout },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'search',
+      },
+    ],
+  },
   {
     path: 'dashboard',
     component: Dashboard,
@@ -25,11 +39,11 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home', // optional landing screen inside dashboard
+        redirectTo: 'home',
       },
       {
         path: 'home',
-        component: DashboardHome, // the current dashboard home content
+        component: DashboardHome,
       },
     ],
   },
