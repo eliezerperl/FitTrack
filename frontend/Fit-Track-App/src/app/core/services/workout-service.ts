@@ -14,20 +14,20 @@ export class WorkoutService {
   constructor(private http: HttpClient) {}
 
   // CRUD Operations
-  createWorkout(loggedWorkout: LoggedWorkout): Observable<Exercise> {
-    return this.http.post<Exercise>(`${this.workoutApiUrl}`, loggedWorkout);
+  createWorkout(loggedWorkout: LoggedWorkout): Observable<LoggedWorkout> {
+    return this.http.post<LoggedWorkout>(`${this.workoutApiUrl}`, loggedWorkout);
   }
-  getAllWorkouts(): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>(`${this.workoutApiUrl}`);
+  getAllWorkouts(): Observable<LoggedWorkout[]> {
+    return this.http.get<LoggedWorkout[]>(`${this.workoutApiUrl}`);
   }
-  getWorkoutById(id: string): Observable<Exercise> {
-    return this.http.get<Exercise>(`${this.workoutApiUrl}/${id}`);
+  getWorkoutById(id: string): Observable<LoggedWorkout> {
+    return this.http.get<LoggedWorkout>(`${this.workoutApiUrl}/${id}`);
   }
-  getWorkoutByUserId(userId: string): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>(`${this.workoutApiUrl}/${userId}`);
+  getWorkoutByUserId(userId: string): Observable<LoggedWorkout[]> {
+    return this.http.get<LoggedWorkout[]>(`${this.workoutApiUrl}/user/${userId}`);
   }
-  updateWorkout(exercise: Exercise): Observable<Exercise> {
-    return this.http.post<Exercise>(`${this.workoutApiUrl}`, exercise);
+  updateWorkout(exercise: LoggedWorkout): Observable<LoggedWorkout> {
+    return this.http.post<LoggedWorkout>(`${this.workoutApiUrl}`, exercise);
   }
   deleteWorkout(id: string): Observable<void> {
     return this.http.delete<void>(`${this.workoutApiUrl}/${id}`);

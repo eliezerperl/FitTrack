@@ -1,0 +1,40 @@
+<div *ngIf="visible" class="modal-backdrop" (click)="onClose()"></div>
+
+<div *ngIf="visible" class="modal">
+  <div class="modal-header">
+    <h2>Food Log History</h2>
+    <button class="close-button" (click)="onClose()">×</button>
+  </div>
+
+  <div class="modal-body">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Quantity</th>
+          <th>Nutrients</th>
+          <th>Date</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of entries">
+          <td>{{ entry.foodName || '-' }}</td>
+          <td>{{ entry.quantity || '-' }}</td>
+          <td>
+            <button (click)="openNutrientListModal(entry.nutrients)">
+              View Nutrients
+            </button>
+          </td>
+          <td>{{ entry.date | date:'shortDate' }}</td>
+          <td>{{ entry.notes || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-nutrient-list-modal
+  *ngIf="showNutrientModal"
+  (close)="closeNutrientListModal()">
+</app-nutrient-list-modal>

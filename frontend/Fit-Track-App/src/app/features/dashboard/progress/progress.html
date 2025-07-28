@@ -5,13 +5,25 @@
     <!-- Workout Progress -->
     <div class="card">
       <h3 class="card-title">Workout Summary</h3>
-      <p>Coming soon...</p>
+      <button (click)="getMyWorkoutHistory()">Show My Workout History</button>
     </div>
 
     <!-- Food Intake Progress -->
     <div class="card">
       <h3 class="card-title">Food Summary</h3>
-      <p>Coming soon...</p>
+      <button (click)="onShowFoodHistory()">Show Food History</button>
     </div>
   </section>
 </div>
+
+<app-workout-history-modal
+  [exercises]="myLoggedWorkouts"
+  [visible]="showLoggedWorkoutsModal"
+  [onClose]="onCloseLoggedWorkoutModal.bind(this)">
+</app-workout-history-modal>
+
+<app-food-history-modal
+  [entries]="myLoggedFoods"
+  [visible]="showLoggedFoodModal"
+  [onClose]="onCloseFoodModal.bind(this)">
+</app-food-history-modal>

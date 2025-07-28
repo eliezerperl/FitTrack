@@ -25,7 +25,9 @@ export class FoodService {
 
   getFoodEntryById() {}
 
-  getFoodEntriesByUserId() {}
+  getFoodEntriesByUserId(userId: string): Observable<LoggedFood[]> {
+    return this.http.get<LoggedFood[]>(`${this.apiUrl}/user/${userId}`);
+  }
 
   updateFoodEntry() {}
 
