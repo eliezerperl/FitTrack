@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FoodList } from './food-list/food-list';
-import { LogFood } from './log-food/log-food';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-food',
-  imports: [CommonModule, FoodList, LogFood],
+  imports: [CommonModule, RouterModule],
   templateUrl: './food.html',
   styleUrl: './food.css'
 })
 export class Food {
-  currentTab: 'search' | 'log' = 'search';
 }

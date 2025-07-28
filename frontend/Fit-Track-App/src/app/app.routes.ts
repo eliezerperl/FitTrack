@@ -9,12 +9,26 @@ import { Progress } from './features/dashboard/progress/progress';
 import { DashboardHome } from './features/dashboard/dashboard-home/dashboard-home';
 import { SearchWorkouts } from './features/fitness/search-workouts/search-workouts';
 import { LogWorkout } from './features/fitness/log-workout/log-workout';
+import { FoodList } from './features/food/food-list/food-list';
+import { LogFood } from './features/food/log-food/log-food';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
-  { path: 'food', component: Food },
+  {
+    path: 'food',
+    component: Food,
+    children: [
+      { path: 'search', component: FoodList },
+      { path: 'log', component: LogFood },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'search',
+      },
+    ],
+  },
   {
     path: 'fitness',
     component: Fitness,
