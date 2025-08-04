@@ -150,7 +150,8 @@ export class LogWorkout implements OnInit {
       });
     }
   }
-  formatDuration(input: string): string {
+  formatDuration(input: string): string | undefined {
+    if (!input) return undefined;
     if (!input.includes(':')) {
       return `00:${input.padStart(2, '0')}:00`;
     }

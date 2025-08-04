@@ -10,15 +10,16 @@
     <table class="history-table">
       <thead>
         <tr>
+          <th>Date</th>
           <th>Food</th>
           <th>Quantity</th>
           <th>Nutrients</th>
-          <th>Date</th>
           <th>Notes</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let entry of entries">
+          <td>{{ entry.dateLogged | date:'shortDate' }}</td>
           <td>{{ entry.foodName || '-' }}</td>
           <td>{{ entry.quantity || '-' }}</td>
           <td>
@@ -26,7 +27,6 @@
               View Nutrients
             </button>
           </td>
-          <td>{{ entry.dateLogged | date:'shortDate' }}</td>
           <td>{{ entry.notes || '-' }}</td>
         </tr>
       </tbody>
@@ -37,5 +37,6 @@
 <app-nutrient-list-modal
   *ngIf="showNutrientModal"
   [nutrients]="selectedNutrients"
-  (close)="closeNutrientListModal()">
+  (close)="closeNutrientListModal()"
+>
 </app-nutrient-list-modal>

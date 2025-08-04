@@ -7,10 +7,16 @@ import { LoggedWorkout } from '../../../core/models/log-workout-model';
 import { LoggedFood } from '../../../core/models/log-food-model';
 import { FoodService } from '../../../core/services/food-service';
 import { FoodHistoryModal } from './food-history-modal/food-history-modal';
-
+import { WorkoutProgressChart } from './workout-progress-chart/workout-progress-chart';
+import { FoodProgressChart } from './food-progress-chart/food-progress-chart';
 @Component({
   selector: 'app-progress',
-  imports: [WorkoutHistoryModal, FoodHistoryModal],
+  imports: [
+    WorkoutHistoryModal,
+    FoodHistoryModal,
+    WorkoutProgressChart,
+    FoodProgressChart,
+  ],
   templateUrl: './progress.html',
   styleUrl: './progress.css',
 })
@@ -32,21 +38,27 @@ export class Progress implements OnInit {
     this.sharedService.userId$.subscribe((id) => {
       this.userId = id;
     });
-  }
-
-  getMyWorkoutHistory() {
     if (this.userId) {
       this.workoutService.getWorkoutByUserId(this.userId).subscribe({
         next: (res) => {
           this.myLoggedWorkouts = res;
-          this.showLoggedWorkoutsModal = true;
           console.log('Workout history:', this.myLoggedWorkouts);
         },
         error: (err) => {
           console.log(err);
         },
       });
+      this.foodService.getFoodEntriesByUserId(this.userId).subscribe({
+        next: (res) => {
+          this.myLoggedFoods = res;
+        },
+        error: (err) => console.error(err),
+      });
     }
+  }
+
+  getMyWorkoutHistory() {
+    this.showLoggedWorkoutsModal = true;
   }
 
   onCloseLoggedWorkoutModal(): void {
@@ -54,15 +66,7 @@ export class Progress implements OnInit {
   }
 
   onShowFoodHistory(): void {
-    if (this.userId) {
-      this.foodService.getFoodEntriesByUserId(this.userId).subscribe({
-        next: (res) => {
-          this.myLoggedFoods = res;
-          this.showLoggedFoodModal = true;
-        },
-        error: (err) => console.error(err),
-      });
-    }
+    this.showLoggedFoodModal = true;
   }
 
   onCloseFoodModal(): void {

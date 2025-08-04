@@ -3,16 +3,22 @@
 
   <section class="progress-grid">
     <!-- Workout Progress -->
-    <div class="card">
-      <h3 class="card-title">Workout Summary</h3>
-      <button (click)="getMyWorkoutHistory()">Show My Workout History</button>
-    </div>
+    <section>
+      <div class="card">
+        <h3 class="card-title">Workout Summary</h3>
+        <button (click)="getMyWorkoutHistory()">Show Workout History</button>
+      </div>
+      <app-workout-progress-chart [workoutEntries]="myLoggedWorkouts" />
+    </section>
 
     <!-- Food Intake Progress -->
-    <div class="card">
-      <h3 class="card-title">Food Summary</h3>
-      <button (click)="onShowFoodHistory()">Show Food History</button>
-    </div>
+    <section>
+      <div class="card">
+        <h3 class="card-title">Food Summary</h3>
+        <button (click)="onShowFoodHistory()">Show Food History</button>
+      </div>
+      <app-food-progress-chart [foodEntries]="myLoggedFoods" />
+    </section>
   </section>
 </div>
 

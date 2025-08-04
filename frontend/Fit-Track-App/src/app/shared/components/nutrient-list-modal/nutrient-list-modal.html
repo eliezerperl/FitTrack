@@ -11,7 +11,7 @@
       {{ nutrient.name }}
     </li>
   </ul>
-  <button (click)="close.emit()">Close</button>
+  <button type="button" (click)="close.emit()">Close</button>
 
   <app-nutrient-modal
     *ngIf="selectedNutrient"
