@@ -2,12 +2,11 @@ import { Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { FoodService } from '../../../core/services/food-service';
-import { FoodNutrient, NutrientEntry } from '../../../core/models/food-nutrient-model';
+import { NutrientEntry } from '../../../core/models/food-nutrient-model';
 import { ToastService } from '../../../core/services/toast-service';
 import { CommonModule } from '@angular/common';
 import { LoggedFood } from '../../../core/models/log-food-model';

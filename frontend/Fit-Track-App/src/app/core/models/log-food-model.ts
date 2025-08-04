@@ -1,4 +1,4 @@
-import { FoodNutrient, NutrientEntry } from './food-nutrient-model';
+import { NutrientEntry } from './food-nutrient-model';
 
 export interface LoggedFood {
   id: string;

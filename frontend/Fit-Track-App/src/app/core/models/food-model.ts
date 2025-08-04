@@ -1,4 +1,4 @@
-import { FoodNutrient } from "./food-nutrient-model";
+import { NutrientEntry } from "./food-nutrient-model";
 
 export interface Food {
   fdcId: number;
@@ -13,7 +13,7 @@ export interface Food {
   score: number;
   allHighlightFields: string;
 
-  foodNutrients: FoodNutrient[];
+  foodNutrients: NutrientEntry[];
 
   finalFoodInputFoods?: any[];
   foodAttributes?: any[];
